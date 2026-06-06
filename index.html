@@ -1,1 +1,118 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مقارنة الأحجام</title>
 
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#111;
+    color:white;
+    margin:0;
+    padding:20px;
+}
+.container{
+    max-width:800px;
+    margin:auto;
+}
+h1{
+    text-align:center;
+}
+select{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border-radius:8px;
+}
+.card{
+    background:#1e1e1e;
+    padding:20px;
+    border-radius:12px;
+    margin-top:20px;
+}
+.bar{
+    height:40px;
+    background:#4caf50;
+    border-radius:8px;
+    margin-top:10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🌍 مقارنة الأحجام</h1>
+
+<select id="obj1"></select>
+<select id="obj2"></select>
+
+<div class="card">
+<h3 id="result1"></h3>
+<div class="bar" id="bar1"></div>
+
+<h3 id="result2"></h3>
+<div class="bar" id="bar2"></div>
+
+<p id="info"></p>
+</div>
+
+</div>
+
+<script>
+
+const objects = [
+{name:"نملة", size:0.005},
+{name:"إنسان", size:1.7},
+{name:"زرافة", size:5.5},
+{name:"شاحنة", size:8},
+{name:"حوت أزرق", size:30},
+{name:"ناطحة سحاب", size:300}
+];
+
+const obj1=document.getElementById("obj1");
+const obj2=document.getElementById("obj2");
+
+objects.forEach((item,index)=>{
+obj1.innerHTML+=`<option value="${index}">${item.name}</option>`;
+obj2.innerHTML+=`<option value="${index}">${item.name}</option>`;
+});
+
+obj1.selectedIndex=1;
+obj2.selectedIndex=5;
+
+function updateComparison(){
+
+const a=objects[obj1.value];
+const b=objects[obj2.value];
+
+const max=Math.max(a.size,b.size);
+
+document.getElementById("result1").innerText=
+`${a.name} (${a.size} متر)`;
+
+document.getElementById("result2").innerText=
+`${b.name} (${b.size} متر)`;
+
+document.getElementById("bar1").style.width=
+(a.size/max*100)+"%";
+
+document.getElementById("bar2").style.width=
+(b.size/max*100)+"%";
+
+document.getElementById("info").innerText=
+`${b.name} أكبر من ${a.name} بحوالي ${(b.size/a.size).toFixed(1)} مرة`;
+}
+
+obj1.addEventListener("change",updateComparison);
+obj2.addEventListener("change",updateComparison);
+
+updateComparison();
+
+</script>
+
+</body>
+</html>
